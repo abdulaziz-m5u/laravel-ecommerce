@@ -27,6 +27,9 @@ Route::group(['middleware' => 'isAdmin','prefix' => 'admin', 'as' => 'admin.'], 
 
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
     Route::resource('tags', \App\Http\Controllers\Admin\TagController::class);
+    
+    Route::post('/products/remove-image', [\App\Http\Controllers\Admin\ProductController::class, 'removeImage'])->name('products.removeImage');
+    Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
 });
 
 Auth::routes();

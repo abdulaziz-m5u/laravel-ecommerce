@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Tag;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\Admin\TagRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +19,7 @@ class TagController extends Controller
     {   
         abort_if(Gate::denies('tag_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $tags = Tag::latest()->paginate(5); 
+        $tags = Tag::withCount('products')->latest()->paginate(5); 
 
         return view('admin.tags.index', compact('tags'));
     }

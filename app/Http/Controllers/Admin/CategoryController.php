@@ -22,7 +22,7 @@ class CategoryController extends Controller
     {   
         abort_if(Gate::denies('category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $categories = Category::with('parent')->latest()->paginate(5); 
+        $categories = Category::with('parent')->withCount('products')->latest()->paginate(5); 
 
         return view('admin.categories.index', compact('categories'));
     }
