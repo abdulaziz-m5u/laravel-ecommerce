@@ -35,6 +35,21 @@ class PermissionSeed extends Seeder
             [ 'title' => 'user_edit',],
             [ 'title' => 'user_view',],
             [ 'title' => 'user_delete',],
+            [ 'title' => 'category_access',],
+            [ 'title' => 'category_create',],
+            [ 'title' => 'category_edit',],
+            [ 'title' => 'category_view',],
+            [ 'title' => 'category_delete',],
+            [ 'title' => 'tag_access',],
+            [ 'title' => 'tag_create',],
+            [ 'title' => 'tag_edit',],
+            [ 'title' => 'tag_view',],
+            [ 'title' => 'tag_delete',],
+            [ 'title' => 'product_access',],
+            [ 'title' => 'product_create',],
+            [ 'title' => 'product_edit',],
+            [ 'title' => 'product_view',],
+            [ 'title' => 'product_delete',],
         ];
 
             Permission::insert($permissions);

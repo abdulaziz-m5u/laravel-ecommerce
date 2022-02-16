@@ -26,6 +26,7 @@ Route::group(['middleware' => 'isAdmin','prefix' => 'admin', 'as' => 'admin.'], 
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
 
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
+    Route::resource('tags', \App\Http\Controllers\Admin\TagController::class);
 });
 
 Auth::routes();

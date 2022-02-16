@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
-use Illuminate\Http\Request;
 use App\Traits\ImageUploadTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
@@ -21,6 +20,8 @@ class CategoryController extends Controller
      */
     public function index()
     {   
+        abort_if(Gate::denies('category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $categories = Category::with('parent')->latest()->paginate(5); 
 
         return view('admin.categories.index', compact('categories'));
@@ -33,6 +34,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('category_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $parent_categories = Category::whereNull('category_id')->get(['id', 'name']);
 
         return view('admin.categories.create', compact('parent_categories'));
@@ -46,6 +49,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
+        abort_if(Gate::denies('category_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $image = NULL;
         if ($request->hasFile('cover')) {
@@ -72,6 +76,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+        abort_if(Gate::denies('category_view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.categories.show', compact('category'));
     }
 
@@ -83,6 +89,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        abort_if(Gate::denies('category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $parent_categories = Category::whereNull('category_id')->get(['id', 'name']);
 
         return view('admin.categories.edit', compact('parent_categories', 'category'));
@@ -97,6 +105,8 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request,Category $category)
     {
+        abort_if(Gate::denies('category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $image = $category->cover;
         if ($request->has('cover')) {
             if ($category->cover != null && File::exists('storage/assets/images/categories/'. $category->cover)) {
@@ -125,6 +135,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        abort_if(Gate::denies('category_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if($category->category_id == null) {
             foreach($category->children as $child) {
                 if (File::exists('storage/images/categories/'. $child->cover)) {
