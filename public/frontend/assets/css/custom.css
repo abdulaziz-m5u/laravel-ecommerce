@@ -1,0 +1,7 @@
+/* custom */
+span.category-name {
+    transition: 0.4s;
+}
+.category-card:hover span.category-name {
+    top: 45% !important;
+}

@@ -109,8 +109,8 @@ class CategoryController extends Controller
 
         $image = $category->cover;
         if ($request->has('cover')) {
-            if ($category->cover != null && File::exists('storage/assets/images/categories/'. $category->cover)) {
-                unlink('storage/assets/images/categories/'. $category->cover);
+            if ($category->cover != null && File::exists('storage/images/categories/'. $category->cover)) {
+                unlink('storage/images/categories/'. $category->cover);
             }
             $image = $this->uploadImage($request->name, $request->cover, 'categories', 500, NULL);
         }
