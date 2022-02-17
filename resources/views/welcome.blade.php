@@ -169,8 +169,8 @@
           
             <div class="carousel-inner">
                 @foreach(\App\Models\Slide::get() as $key => $slide)
-                    <div style="height: 120vh;" class="carousel-item {{$key == 0 ? 'active' : '' }}">
-                        <img style="width: 100%;height: auto;object-fit:cover;" src="{{ Storage::url('images/slides/'. $slide->cover) }}" class="d-block" alt="{{ $slide->title }}">
+                    <div class="carousel-item {{$key == 0 ? 'active' : '' }}">
+                        <img src="{{ Storage::url('images/slides/'. $slide->cover) }}" class="d-block w-100" alt="{{ $slide->title }}">
                         <div class="carousel-caption d-none d-md-block">
                             <h5>{{ $slide->title }}</h5>
                             <p>{{ $slide->body }}</p>
@@ -191,10 +191,14 @@
         <!-- end slides -->
 
         <!-- categories -->
-        <div class="container">
+        <div class="container mt-5">
+                <div class="section-title-furits text-center">
+                    <h2>BROWSE OUR CATEGORIES</h2>
+                </div>
+                <br>
             <div class="row mt-5">
                 @foreach(\App\Models\Category::get()->take(4) as $category)
-                    <div class="col-lg-6 mb-5">
+                    <div class="col-lg-3 mb-5">
                         <div class="card category-card">
                             <img class="img-cover" src="{{ Storage::url('images/categories/'. $category->cover) }}" alt="">
                             <span 
@@ -212,9 +216,10 @@
         <!-- services -->
         <div class="services-area wrapper-padding-4 gray-bg pt-120 pb-80">
             <div class="container-fluid">
-                <div class="section-title-6 text-center mb-50">
+                <div class="section-title-furits text-center">
                     <h2>Why Choose Us</h2>
                 </div>
+                <br>
                 <div class="services-wrapper mt-40">
                     <div class="single-services mb-40">
                         <div class="services-img">
@@ -251,9 +256,11 @@
         <!-- products -->
         <div class="popular-product-area wrapper-padding-3 pt-115 pb-115">
             <div class="container-fluid">
-                <div class="section-title-6 text-center mb-50">
+                <br>
+                <div class="section-title-furits section-title-6 text-center mb-50">
                     <h2>Popular Product</h2>
                 </div>
+                <br>
                 <div class="product-style">
                     <div class="popular-product-active owl-carousel">
                         @foreach (\App\Models\Product::get() as $product)

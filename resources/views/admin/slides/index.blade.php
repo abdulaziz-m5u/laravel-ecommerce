@@ -44,13 +44,13 @@
                             </td>
                             <td>{{ $slide->position }}</td>
                             <td>
-                                @if (!$slide)
+                                @if ($slide->prevSlide())
                                     <a href="{{ url('admin/slides/'. $slide->id .'/up') }}">up</a>
                                 @else
                                     up
                                 @endif
                                     | 
-                                @if ($slide)
+                                @if ($slide->nextSlide())
                                     <a href="{{ url('admin/slides/'. $slide->id .'/down') }}">down</a>
                                 @else
                                     down

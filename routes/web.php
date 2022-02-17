@@ -29,7 +29,6 @@ Route::group(['middleware' => 'isAdmin','prefix' => 'admin', 'as' => 'admin.'], 
     Route::resource('tags', \App\Http\Controllers\Admin\TagController::class);
     Route::post('/products/remove-image', [\App\Http\Controllers\Admin\ProductController::class, 'removeImage'])->name('products.removeImage');
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
-
     Route::resource('slides', \App\Http\Controllers\Admin\SlideController::class);
     Route::get('slides/{slideID}/up', [\App\Http\Controllers\Admin\SlideController::class, 'moveUp']);
     Route::get('slides/{slideID}/down', [\App\Http\Controllers\Admin\SlideController::class, 'moveDown']);

@@ -134,4 +134,52 @@ class SlideController extends Controller
             'alert-type' => 'danger'
         ]);        
     }
+
+    public function moveUp($slideId){
+        $slide = Slide::findOrFail($slideId);
+
+		if (!$slide->prevSlide()) {
+			return redirect()->route('admin.slides.index');
+		}
+
+		\DB::transaction(
+			function () use ($slide) {
+				$currentPosition = $slide->position;
+				$prevPosition = $slide->prevSlide()->position;
+
+				$prevSlide = Slide::find($slide->prevSlide()->id);
+				$prevSlide->position = $currentPosition;
+				$prevSlide->save();
+
+				$slide->position = $prevPosition;
+				$slide->save();
+			}
+		);
+
+		return redirect()->route('admin.slides.index');
+    }   
+
+    public function moveDown($slideId){
+        $slide = Slide::findOrFail($slideId);
+
+		if (!$slide->nextSlide()) {
+			return redirect()->route('admin.slides.index');
+		}
+
+		\DB::transaction(
+			function () use ($slide) {
+				$currentPosition = $slide->position;
+				$prevPosition = $slide->nextSlide()->position;
+
+				$prevSlide = Slide::find($slide->nextSlide()->id);
+				$prevSlide->position = $currentPosition;
+				$prevSlide->save();
+
+				$slide->position = $prevPosition;
+				$slide->save();
+			}
+		);
+
+		return redirect()->route('admin.slides.index');
+    }   
 }
