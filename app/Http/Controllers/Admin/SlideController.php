@@ -97,7 +97,7 @@ class SlideController extends Controller
             if ($slide->cover != null && File::exists('storage/images/slides/'. $slide->cover)) {
                 unlink('storage/images/slides/'. $slide->cover);
             }
-            $image = $this->uploadImage($request->title, $request->cover, 'slides', 500, NULL);
+            $image = $this->uploadImage($request->title, $request->cover, 'slides', 450, 450);
         }
 
         $slide->update([

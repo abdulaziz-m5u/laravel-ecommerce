@@ -9,23 +9,23 @@ trait ImageUploadTrait
 {
     protected $path  = 'app/public/images/';
 
-    public function uploadImage($name, $img, $folderName, $image_width = NULL, $image_height = NULL): string
+    public function uploadImage($name, $img, $folderName, $image_width = 400, $image_height = 400): string
     {
         $image_name = $this->imageName($name, $img);
 
-        Image::make($img->getRealPath())->resize($image_width, $image_height, function ($constraint) {
+        Image::make($img->getRealPath())->fit($image_width, $image_height, function ($constraint) {
             $constraint->aspectRatio();
         })->save(storage_path($this->path.$folderName.'/'.$image_name), 100);
 
         return $image_name;
     }
 
-    public function uploadImages($name, $img, $i, $folderName, $image_width = NULL, $image_height = NULL): string
+    public function uploadImages($name, $img, $i, $folderName, $image_width = 312, $image_height = 400): string
     {
         $image_name = $this->randomImageName($name, $img, $i);
 
         Image::make($img->getRealPath())
-            ->resize($image_width, $image_height, function ($constraint) {
+            ->fit($image_width, $image_height, function ($constraint) {
                 $constraint->aspectRatio();
             })->save(storage_path($this->path.$folderName.'/'.$image_name), 100);
 

@@ -47,7 +47,7 @@
                             </td>
                             <td><a href="{{ route('admin.products.show', $product->id) }}">{{ $product->name }}</a></td>
                             <td>{{ $product->quantity }}</td>
-                            <td>SR {{ $product->price }}</td>
+                            <td>${{ $product->price }}</td>
                             <td>
                                 <span class="badge badge-info">{{ $product->tags->pluck('name')->join(', ') }}</span>
                             </td>

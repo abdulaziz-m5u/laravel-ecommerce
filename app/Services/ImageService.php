@@ -13,7 +13,7 @@ class ImageService
     {
         foreach ($images as $image) {
             $product->media()->create([
-                'file_name' => $this->uploadImages($product->name, $image, $i, 'products', 500, NULL),
+                'file_name' => $this->uploadImages($product->name, $image, $i, 'products', 312, 400),
                 'file_size' => $image->getSize(),
                 'file_type' => $image->getMimeType(),
                 'file_status' => true,

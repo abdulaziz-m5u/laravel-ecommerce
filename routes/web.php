@@ -15,9 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('', function () {
-    return view('welcome');
+Route::get('/', function () {
+    return view('frontend.homepage');
 });
+
+Route::get('search', [\App\Http\Controllers\ShopController::class, 'search'])->name('search');
+Route::get('shop/{slug?}', [\App\Http\Controllers\ShopController::class, 'index'])->name('shop.index');
+Route::get('shop/tag/{slug}', [\App\Http\Controllers\ShopController::class, 'tag'])->name('shop.tag');
+Route::get('product/{slug}', [\App\Http\Controllers\ProductController::class, 'show'])->name('product.show');
 
 Route::group(['middleware' => 'isAdmin','prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard.index');

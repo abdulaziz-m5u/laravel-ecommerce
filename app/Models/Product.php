@@ -28,6 +28,21 @@ class Product extends Model
         ];
     }
 
+    public function getStatusAttribute(): string
+    {
+        return $this->attributes['status'] == 0 ? 'Inactive' : 'Active';
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->whereStatus(true);
+    }
+
+    public function scopeHasQuantity($query)
+    {
+        return $query->where('quantity', '>', 0);
+    }
+
     public function category(){
         return $this->belongsTo(Category::class);
     }
@@ -47,8 +62,4 @@ class Product extends Model
             ->orderBy('file_sort', 'asc');
     }
 
-    public function getStatusAttribute(): string
-    {
-        return $this->attributes['status'] == 0 ? 'Inactive' : 'Active';
-    }
 }
