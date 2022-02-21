@@ -65,7 +65,7 @@
                                 </nav>
                             </div>
                             <div class="header-cart">
-                                <a class="icon-cart-furniture" href="">
+                                <a class="icon-cart-furniture" href="{{ route('cart.index') }}">
                                     <i class="ti-shopping-cart"></i>
                                     <span class="shop-count-furniture green">50</span>
                                 </a>

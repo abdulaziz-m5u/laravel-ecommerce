@@ -1,0 +1,111 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Product;
+use Illuminate\Http\Request;
+
+class CartController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $carts = \Cart::getContent();
+
+        return view('frontend.cart.index', compact('carts'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {		
+        $product = Product::findOrFail($request->product_id);
+        
+        $carts = \Cart::getContent();
+		$itemQuantity = 0;
+		if ($carts) {
+			foreach ($carts as $cart) {
+				if ($cart->id == $product->id) {
+					$itemQuantity = $cart->quantity;
+					break;
+				}
+			}
+        }
+        
+        $itemQuantity +=  $request->qty;
+
+        if ($product->quantity < $itemQuantity) {
+			// throw new \App\Exceptions\OutOfStockException('The product '. $product->sku .' is out of stock');
+		}
+		
+		$item = [
+			'id' => md5($product->id),
+			'name' => $product->name,
+			'price' => $product->price,
+			'quantity' => $request->qty,
+			'associatedModel' => $product,
+		];
+
+        \Cart::add($item);
+        
+		return redirect()->back();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        $params = $request->except('_token');
+
+        if($items = $params['items']){
+            foreach($items as $cartId => $item){
+                $carts = \Cart::getContent();
+    
+                if ($carts[$cartId]->associatedModel->quantity < $item['quantity'] ) {
+                    // throw new \App\Exceptions\OutOfStockException('The product '. $carts[$cartId]->associatedModel->sku .' is out of stock');
+                }
+
+                \Cart::update($cartId,[
+                    'quantity' => [
+                        'relative' => false,
+                        'value' => $item['quantity'],
+                    ],
+                ]);
+            }
+
+            return redirect()->back()->with([
+                'message' => 'success updated !',
+                'alert-type' => 'info'
+            ]);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($cartId)
+    {
+        \Cart::remove($cartId);
+
+        return redirect()->back()->with([
+            'message' => 'success deleted !',
+            'alert-type' => 'danger'
+        ]);;
+    }
+}

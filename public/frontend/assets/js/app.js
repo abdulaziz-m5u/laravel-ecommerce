@@ -133,27 +133,20 @@ function getQuickView(product_slug) {
     $(".add-to-card").on("click", function (e) {
         e.preventDefault();
 
-        var product_type = $(this).attr("product-type");
         var product_id = $(this).attr("product-id");
-        var product_slug = $(this).attr("product-slug");
 
-        if (product_type == "configurable") {
-            getQuickView(product_slug);
-        } else {
-            $.ajax({
-                type: "POST",
-                url: "/carts",
-                data: {
-                    _token: $('meta[name="csrf-token"]').attr("content"),
-                    product_id: product_id,
-                    qty: 1,
-                },
-                success: function (response) {
-                    swal("Success !");
-                    location.reload(true);
-                },
-            });
-        }
+        $.ajax({
+            type: "POST",
+            url: "/cart",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr("content"),
+                product_id: product_id,
+                qty: 1,
+            },
+            success: function (response) {
+                swal("Success !");
+            },
+        });
     });
 
     $(".add-to-fav").on("click", function (e) {
