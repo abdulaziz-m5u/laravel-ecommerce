@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->integer('price');
             $table->text('description');
             $table->longText('details');
+            $table->integer('weight');
             $table->integer('quantity')->default(0);
             $table->boolean('status')->default(false);
             $table->unsignedTinyInteger('review_able')->default(1);

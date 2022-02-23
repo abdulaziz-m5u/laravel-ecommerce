@@ -45,5 +45,17 @@
                 </div>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseOrder" aria-expanded="true" aria-controls="collapseTwo">
+                    <span>{{ __('Order Management') }}</span>
+                </a>
+                <div id="collapseOrder" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item {{ request()->is('admin/orders') || request()->is('admin/orders/*') ? 'active' : '' }}" href="{{ route('admin.orders.index') }}"> <i class="fa fa-briefcase mr-2"></i> {{ __('Order') }}</a>
+                        <a class="collapse-item {{ request()->is('admin/shipments') || request()->is('admin/shipmentss/*') ? 'active' : '' }}" href="{{ route('admin.shipments.index') }}"> <i class="fa fa-briefcase mr-2"></i> {{ __('Shipments') }}</a>
+                    </div>
+                </div>
+            </li>
+
 
         </ul>

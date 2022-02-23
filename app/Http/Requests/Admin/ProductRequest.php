@@ -33,6 +33,7 @@ class ProductRequest extends FormRequest
                     'category_id' => ['required'],
                     'tags.*' => ['required'],
                     'status' => ['required'],
+                    'weight' => ['required', 'numeric'],
                     'description' => ['required', 'max:1000'],
                     'details' => ['required', 'max:10000'],
                     'images' => ['required'],

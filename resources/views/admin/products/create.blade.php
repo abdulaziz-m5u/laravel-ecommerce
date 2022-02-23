@@ -72,7 +72,14 @@
                         </div>
                     </div>
                    <div class="row">
-                    <div class="col-12">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="weight">Weight (gram)</label>
+                                <input type="number" name="weight" class="form-control">
+                                @error('weight')<span class="text-danger">{{ $message }}</span>@enderror
+                            </div>
+                        </div>
+                        <div class="col-6">
                             <div class="form-group">
                                 <label for="status">Status</label>
                                 <select name="status" id="status" class="form-control">

@@ -80,7 +80,7 @@
 									<ul>
 										<li>Total<span>{{ number_format(\Cart::getTotal()) }}</span></li>
 									</ul>
-									<a href="">Proceed to checkout</a>
+									<a href="{{ route('checkout.process') }}">Proceed to checkout</a>
 								</div>
 							</div>
 						</div>

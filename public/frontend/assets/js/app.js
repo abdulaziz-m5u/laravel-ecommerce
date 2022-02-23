@@ -145,6 +145,7 @@ function getQuickView(product_slug) {
             },
             success: function (response) {
                 swal("Success !");
+                location.reload(true);
             },
         });
     });

@@ -67,37 +67,42 @@
                             <div class="header-cart">
                                 <a class="icon-cart-furniture" href="{{ route('cart.index') }}">
                                     <i class="ti-shopping-cart"></i>
-                                    <span class="shop-count-furniture green">50</span>
+                                    <span class="shop-count-furniture green">{{ \Cart::getTotalQuantity() }}</span>
                                 </a>
+                                @if (!\Cart::isEmpty())
                                     <ul class="cart-dropdown">
-                                            <li class="single-product-cart">
-                                                <div class="cart-img">
-                                                    <a href=""><img src="" alt="" style="width:100px"></a>
-                                                </div>
-                                                <div class="cart-title">
-                                                    <h5>
-                                                        <a href="">name</a>
-                                                    </h5>
-                                                    <span>1000 x qty</span>
-                                                </div>
-                                                <div class="cart-delete">
-                                                    <a href="" class="delete"><i class="ti-trash"></i></a>
-                                                </div>
-                                            </li>
+                                    @foreach (\Cart::getContent() as $item)
+                                        @php
+                                            $product = $item->associatedModel;
+											$image = !empty($product->firstMedia) ? asset('storage/images/products/'. $product->firstMedia->file_name) : asset('frontend/assets/img/cart/3.jpg')
+                                        @endphp
+                                        <li class="single-product-cart">
+                                            <div class="cart-img">
+                                                <a href="{{ route('product.show', $product->slug) }}"><img src="{{ $image }}" alt="{{ $product->name }}" style="width:100px"></a>
+                                            </div>
+                                            <div class="cart-title">
+                                                <h5><a href="{{ route('product.show', $product->slug) }}">{{ $item->name }}</a></h5>
+                                                <span>{{ number_format($item->price) }} x {{ $item->quantity }}</span>
+                                            </div>
+                                            <div class="cart-delete">
+                                                <a href="{{ url('carts/remove/'. $item->id)}}" class="delete"><i class="ti-trash"></i></a>
+                                            </div>
+                                        </li>
+                                     @endforeach
                                         <li class="cart-space">
                                             <div class="cart-sub">
                                                 <h4>Subtotal</h4>
                                             </div>
                                             <div class="cart-price">
-                                                <h4>Total</h4>
+                                                <h4>{{ number_format(\Cart::getSubTotal()) }}</h4>
                                             </div>
                                         </li>
                                         <li class="cart-btn-wrapper">
-                                            <a class="cart-btn btn-hover" href="">view cart</a>
-                                            <a class="cart-btn btn-hover" href="">checkout</a>
+                                            <a class="cart-btn btn-hover" href="{{ route('cart.index') }}">view cart</a>
+                                            <a class="cart-btn btn-hover" href="{{ route('checkout.process') }}">checkout</a>
                                         </li>
                                     </ul>
-                                    
+                                 @endif   
                             </div>
                         </div>
                         <div class="row">
