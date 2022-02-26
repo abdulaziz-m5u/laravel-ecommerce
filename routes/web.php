@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.homepage');
-});
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
 
 Route::get('search', [\App\Http\Controllers\ShopController::class, 'search'])->name('search');
 Route::get('shop/{slug?}', [\App\Http\Controllers\ShopController::class, 'index'])->name('shop.index');
@@ -44,6 +42,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::resource('tags', \App\Http\Controllers\Admin\TagController::class);
         Route::post('/products/remove-image', [\App\Http\Controllers\Admin\ProductController::class, 'removeImage'])->name('products.removeImage');
         Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
+        Route::resource('reviews', \App\Http\Controllers\Admin\ReviewController::class)->only(['index','edit','update','destroy','show']);
         Route::resource('slides', \App\Http\Controllers\Admin\SlideController::class);
         Route::get('slides/{slideId}/up', [\App\Http\Controllers\Admin\SlideController::class, 'moveUp']);
         Route::get('slides/{slideId}/down', [\App\Http\Controllers\Admin\SlideController::class, 'moveDown']);
@@ -53,11 +52,10 @@ Route::group(['middleware' => 'auth'], function() {
         Route::put('orders/cancel/{orderId}', [\App\Http\Controllers\Admin\OrderController::class, 'cancelUpdate'])->name('orders.cancelUpdate');
         Route::post('orders/complete/{orderId}', [\App\Http\Controllers\Admin\OrderController::class, 'complete'])->name('orders.complete');
         Route::resource('shipments', \App\Http\Controllers\Admin\ShipmentController::class)->only(['index','edit','update']);
+
+        Route::get('reports/revenue', [\App\Http\Controllers\Admin\ReportController::class, 'revenue'])->name('reports.revenue');
     });
 });
 
 Auth::routes();
 
-Route::get('/home', function() {
-    return view('home');
-})->name('home');

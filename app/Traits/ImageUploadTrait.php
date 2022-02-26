@@ -20,7 +20,7 @@ trait ImageUploadTrait
         return $image_name;
     }
 
-    public function uploadImages($name, $img, $i, $folderName, $image_width = 312, $image_height = 400): string
+    public function uploadImages($name, $img, $i, $folderName, $image_width = null, $image_height = null): string
     {
         $image_name = $this->randomImageName($name, $img, $i);
 

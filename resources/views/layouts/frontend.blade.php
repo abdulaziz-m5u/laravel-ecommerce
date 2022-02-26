@@ -22,6 +22,7 @@
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/bundle.css') }}">
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/responsive.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="{{ asset('frontend/assets/js/vendor/modernizr-2.8.3.min.js') }}"></script>
         
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/custom.css') }}">
@@ -140,7 +141,7 @@
                                         <li>Get Access: <a href="{{ route('login') }}">Login</a></li>
                                         <li><a href="{{ route('register') }}">Register</a></li>
                                     @else
-                                        <li>Hello: <a href="">username</a></li>
+                                        <li>Hello: <a href="">{{ auth()->user()->name }}</a></li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
@@ -251,7 +252,8 @@
 
      
        
-		
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+        @livewireScripts
 		<!-- all js here -->
         <script src="{{ asset('frontend/assets/js/vendor/jquery-1.12.0.min.js') }}"></script>
         <script src="{{ asset('frontend/assets/js/popper.js') }}"></script>
@@ -304,6 +306,5 @@
                 });
             });
         </script>
-        @livewireScripts
     </body>
 </html>

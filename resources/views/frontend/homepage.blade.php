@@ -4,12 +4,12 @@
      <!-- slides -->
      <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">       
             <div class="carousel-inner">
-                @foreach(\App\Models\Slide::get() as $key => $slide)
+                @foreach($slides as $key => $slide)
                     <div class="carousel-item {{$key == 0 ? 'active' : '' }}">
                         <img src="{{ Storage::url('images/slides/'. $slide->cover) }}" class="d-block w-100" alt="{{ $slide->title }}">
                         <div class="carousel-caption d-none d-md-block">
                             <h5>{{ $slide->title }}</h5>
-                            <p>{{ $slide->body }}</p>
+                            <p>{!! $slide->body !!}</p>
                             <a class="furniture-slider-btn btn-hover animated text-white" style="border: 1px solid #fff;" href="{{ $slide->url }}">Go</a>
                         </div>
                     </div>    
@@ -33,15 +33,17 @@
                 </div>
                 <br>
             <div class="row mt-5">
-                @foreach(\App\Models\Category::get()->take(4) as $category)
+                @foreach($categories as $category)
                     <div class="col-lg-3 mb-5">
                         <div class="card category-card">
-                            <img class="img-cover" src="{{ Storage::url('images/categories/'. $category->cover) }}" alt="">
-                            <span 
-                            class="position-absolute category-name" 
-                            style=" position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%);background-color: white;padding: .8rem 1rem;border: 3px solid #f0f0f0;">
-                                {{ $category->name }}
-                            </span>
+                            <a href="{{ route('shop.index', $category->slug) }}">
+                                <img class="img-cover" src="{{ Storage::url('images/categories/'. $category->cover) }}" alt="">
+                                <span 
+                                class="position-absolute category-name" 
+                                style=" position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%);background-color: white;padding: .8rem 1rem;border: 3px solid #f0f0f0;">
+                                    {{ $category->name }}
+                                </span>
+                            </a>
                         </div>
                     </div>
                 @endforeach
@@ -99,10 +101,10 @@
                 <br>
                 <div class="product-style">
                     <div class="popular-product-active owl-carousel">
-                        @foreach (\App\Models\Product::get() as $product)
+                        @foreach ($products as $product)
                             <div class="product-wrapper">
                                 <div class="product-img">
-                                    <a href="#">
+                                    <a href="{{ route('product.show', $product->slug) }}">
                                         @if($product->firstMedia)
                                         <img src="{{ asset('storage/images/products/' . $product->firstMedia->file_name) }}"
                                          alt="{{ $product->name }}">
@@ -123,7 +125,7 @@
                                     </div>
                                 </div>
                                 <div class="funiture-product-content text-center">
-                                    <h4><a href="">{{ $product->name }}</a></h4>
+                                    <h4><a href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a></h4>
                                     <span>${{ $product->price }}</span>
                                 </div>
                             </div>

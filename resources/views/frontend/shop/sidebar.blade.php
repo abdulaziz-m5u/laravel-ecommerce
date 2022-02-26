@@ -47,33 +47,25 @@
         <h3 class="sidebar-title">RECENT REVIEWS</h3>
         <hr style="margin-top: 0; margin-bottom: 10px; border: solid 1px;">
         <ul>
-        
+            @foreach($recent_reviews as $recent_review)
                 <li>
                     <div class="post-wrapper d-flex">
                         <div class="mb-2">
-                            <img src="#" alt="">
+                            <img src="https://ui-avatars.com/api/?name={{ $recent_review->user->name }}&background=0d8abc&color=fff" alt="{{ $recent_review->name }}">
                         </div>
                         <div class="ml-3 p-0">
-                            
+                            @if(isset($recent_review->product->slug))
                                 <p>
-                                    <span class=""></span>
-                                    <small> review on :
-                                        
+                                    <span class="">{{ $recent_review->user->name }}</span>
+                                    <small class="text-success"> review on :
+                                        {{ $recent_review->product->name }}
                                     </small>
                                 </p>
-                                <p></p>
-                      
-
-                                <h6><span class="text-success">review name</span>
-                                    <small> review : </small>
-                                </h6>
-                                <p>Lorem ipsum dolor sit amet.</p>
-
-                         
+                            @endif
                         </div>
                     </div>
                 </li>
-          
+            @endforeach
         </ul>
     </div>
 </div>

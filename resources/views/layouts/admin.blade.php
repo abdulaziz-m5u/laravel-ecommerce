@@ -21,6 +21,7 @@
     <link href="{{ asset('backend/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('backend/vendor/bootstrap-fileinput/css/fileinput.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/vendor/summernote/summernote-bs4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/plugins/bootstrap-datepicker3.min.css') }}">
     @stack('style-alt')
 </head>
 

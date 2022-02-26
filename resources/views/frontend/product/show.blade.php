@@ -145,7 +145,7 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-lg-9 col-12">
-                                       singe product review
+                                        <livewire:shop.single-product-review-component :product="$product" />
                                     </div>
                                 </div>
                             </div>

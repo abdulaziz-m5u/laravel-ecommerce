@@ -115,4 +115,5 @@ class Order extends Model
 	{
 		return "{$this->customer_first_name} {$this->customer_last_name}";
 	}
+
 }

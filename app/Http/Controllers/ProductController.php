@@ -11,7 +11,8 @@ class ProductController extends Controller
     {
         $product = Product::with('media', 'category', 'tags')
             ->where('slug', $slug)
-            ->withCount('media')
+            ->withCount('media','approvedReviews')
+            ->withAvg('approvedReviews', 'rating')
             ->active()
             ->hasQuantity()
             ->firstOrFail();

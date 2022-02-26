@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "barryvdh/laravel-dompdf": "^1.0",
         "cviebrock/eloquent-sluggable": "8.0.8",
         "darryldecode/cart": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
@@ -18,7 +19,8 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
-        "livewire/livewire": "^2.10"
+        "livewire/livewire": "^2.10",
+        "maatwebsite/excel": "^3.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
