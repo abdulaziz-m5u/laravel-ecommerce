@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Midtrans\Snap;
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Shipment;
 use App\Models\OrderItem;
@@ -27,7 +29,7 @@ class OrderController extends Controller
 		$provinces = $this->getProvinces();
 		$cities = isset(auth()->user()->city_id) ? $this->getCities(auth()->user()->id) : [];
 
-		return view('frontend.order.checkout', compact('items','totalWeight', 'provinces', 'cities'));
+		return view('frontend.orders.checkout', compact('items','totalWeight', 'provinces', 'cities'));
 	}
 
 	public function cities(Request $request)
@@ -265,9 +267,39 @@ class OrderController extends Controller
 				}
 			}
 
+			$this->initPaymentGateway();
+
+			$customerDetails = [
+				'first_name' => $order->customer_first_name,
+				'last_name' => $order->customer_last_name,
+				'email' => $order->customer_email,
+				'phone' => $order->customer_phone,
+			];
+
+			$transaction_details = [
+				'enable_payments' => Payment::PAYMENT_CHANNELS,
+				'transaction_details' => [
+					'order_id' => $order->code,
+					'gross_amount' => $order->grand_total,
+				],
+				'customer_details' => $customerDetails,
+				'expiry' => [
+					'start_time' => date('Y-m-d H:i:s T'),
+					'unit' => Payment::EXPIRY_UNIT,
+			 		'duration' => Payment::EXPIRY_DURATION,
+				]
+			];
+
+			$snap = Snap::createTransaction($transaction_details);
+			
+			if ($snap->token) {
+				$order->payment_token = $snap->token;
+				$order->payment_url = $snap->redirect_url;
+				$order->save();
+			}
+
 			$shippingFirstName = isset($params['ship_to']) ? $params['shipping_first_name'] : $params['first_name'];
 			$shippingLastName = isset($params['ship_to']) ? $params['shipping_last_name'] : $params['last_name'];
-			$shippingCompany = isset($params['ship_to']) ? $params['shipping_company'] :$params['company'];
 			$shippingAddress1 = isset($params['ship_to']) ? $params['shipping_address1'] : $params['address1'];
 			$shippingAddress2 = isset($params['ship_to']) ? $params['shipping_address2'] : $params['address2'];
 			$shippingPhone = isset($params['ship_to']) ? $params['shipping_phone'] : $params['phone'];
@@ -301,13 +333,36 @@ class OrderController extends Controller
 		if ($order) {
 			\Cart::clear();
 
-			return redirect('orders/received/'. $order->id);
+			return redirect()->route('checkout.received', $order->id);
 		}
 
 		return redirect()->back()->with([
 			'message' => 'something went wrong !',
 			'alert-type' => 'danger'
 		]);
+	}
+
+	public function received($orderId)
+	{
+		$order = Order::where('id', $orderId)
+			->where('user_id', auth()->id())
+			->firstOrFail();
+
+		return view('frontend.orders.received', compact('order'));
+	}
+
+	public function index(){
+		$orders = Order::where('user_id', auth()->id())
+			->paginate(10);
+
+		return view('frontend.orders.index', compact('orders'));
+	}
+
+	public function show($id)
+	{
+		$order = Order::where('user_id', auth()->id())->findOrFail($id);
+		
+		return view('frontend.orders.show', compact('order'));
 	}
 	
 }

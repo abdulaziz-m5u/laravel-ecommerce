@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Midtrans\Config;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Controller extends BaseController
 {
@@ -32,9 +33,9 @@ class Controller extends BaseController
 	 */
 	public function __construct()
 	{
-		$this->rajaOngkirApiKey = env('RAJAONGKIR_API_KEY');
-		$this->rajaOngkirBaseUrl = env('RAJAONGKIR_BASE_URL');
-		$this->rajaOngkirOrigin = env('RAJAONGKIR_ORIGIN');
+		$this->rajaOngkirApiKey = config('rajaongkir.api_key');
+		$this->rajaOngkirBaseUrl = config('rajaongkir.base_url');
+		$this->rajaOngkirOrigin = config('rajaongkir.origin');
 	}
     /**
 	 * Raja Ongkir Request (Shipping Cost Calculation)
@@ -125,5 +126,17 @@ class Controller extends BaseController
 		}
 
 		return $cities;
+	}
+
+	protected function initPaymentGateway()
+	{
+		// Set your Merchant Server Key
+		Config::$serverKey = config('midtrans.serverKey');
+		// Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+		Config::$isProduction = config('midtrans.isProduction');
+		// Set sanitization on (default)
+		Config::$isSanitized = config('midtrans.isSanitized');
+		// Set 3DS transaction for credit card to true
+		Config::$is3ds = config('midtrans.is3ds');
 	}
 }

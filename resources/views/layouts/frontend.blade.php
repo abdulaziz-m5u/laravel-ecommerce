@@ -141,7 +141,7 @@
                                         <li>Get Access: <a href="{{ route('login') }}">Login</a></li>
                                         <li><a href="{{ route('register') }}">Register</a></li>
                                     @else
-                                        <li>Hello: <a href="">{{ auth()->user()->name }}</a></li>
+                                        <li>Hello: <a href="{{ route('profile.index') }}">{{ auth()->user()->name }}</a></li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
@@ -167,6 +167,11 @@
                                     <li>
                                         <a href=""><i class="ti-heart"></i> Favorites</a>
                                     </li>
+                                    @auth
+                                    <li>
+                                        <a href="{{ route('orders.index') }}"><i class="ti-money"></i> Orders</a>
+                                    </li>
+                                    @endauth
                                 </ul>
                             </div>
                         </div>

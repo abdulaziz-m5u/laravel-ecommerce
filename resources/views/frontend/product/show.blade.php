@@ -2,6 +2,16 @@
 @section('title', $product->name)
 @section('content')
     <div class="product-details ptb-100 pb-90">
+
+    @if(session()->has('message'))
+        <div class="alert alert-{{ session()->get('alert-type') }} alert-dismissible fade show" role="alert" id="alert-message">
+            {{ session()->get('message') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-lg-7 col-12">
@@ -69,7 +79,7 @@
                             <span>${{ $product->price }}</span>
                         </div>
                         <p>{!! $product->description !!}</p>
-                            <form action="" method="post">
+                            <form action="{{ route('cart.store') }}" method="post">
                                     @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
 

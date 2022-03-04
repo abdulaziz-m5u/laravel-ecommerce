@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('payments/notification', [\App\Http\Controllers\PaymentController::class, 'notification'])->name('payment.notification');
+Route::get('payments/completed', [\App\Http\Controllers\PaymentController::class, 'completed'])->name('payment.completed');
+Route::get('payments/failed', [\App\Http\Controllers\PaymentController::class, 'failed'])->name('payment.failed');
+Route::get('payments/unfinish', [\App\Http\Controllers\PaymentController::class, 'unfinish'])->name('payment.unfinish');
+
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
 
 Route::get('search', [\App\Http\Controllers\ShopController::class, 'search'])->name('search');
@@ -26,11 +31,17 @@ Route::resource('cart', \App\Http\Controllers\CartController::class)->only(['ind
 
 Route::group(['middleware' => 'auth'], function() {
 
+    Route::get('profile', [\App\Http\Controllers\Auth\ProfileController::class, 'index'])->name('profile.index');
+    Route::put('profile', [\App\Http\Controllers\Auth\ProfileController::class, 'update'])->name('profile.update');
+
     Route::get('orders/checkout', [\App\Http\Controllers\OrderController::class, 'process'])->name('checkout.process');
     Route::get('orders/cities', [\App\Http\Controllers\OrderController::class, 'cities']);
     Route::post('orders/shipping-cost', [\App\Http\Controllers\OrderController::class, 'shippingCost']);
     Route::post('orders/set-shipping', [\App\Http\Controllers\OrderController::class, 'setShipping']);
     Route::post('orders/checkout', [\App\Http\Controllers\OrderController::class, 'checkout'])->name('checkout');
+    Route::get('orders/received/{orderId}', [\App\Http\Controllers\OrderController::class, 'received'])->name('checkout.received');
+    Route::get('orders', [\App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
+    Route::get('orders/{orderId}', [\App\Http\Controllers\OrderController::class, 'show'])->name('orders.show');
 
     Route::group(['middleware' => 'isAdmin','prefix' => 'admin', 'as' => 'admin.'], function() {
         Route::get('dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard.index');

@@ -56,7 +56,10 @@ class CartController extends Controller
 
         \Cart::add($item);
         
-		return redirect()->back();
+		return redirect()->back()->with([
+            'message' => 'success added to cart !',
+            'alert-type' => 'success',
+            ]);;
     }
 
     /**
