@@ -14,6 +14,11 @@
 	</div>
 	<div class="shop-page-wrapper shop-page-padding ptb-100">
 		<div class="container-fluid">
+			@if(session()->has('message'))
+				<div class="alert alert-success">
+					{{ session()->get('message') }}
+				</div>
+			@endif
 			<div class="row">
 				<div class="col-lg-3">
                     <h3 class="sidebar-title">User Menu</h3>
@@ -32,36 +37,28 @@
 									<form action="{{ route('profile.update') }}" method="post">
 									@csrf
                                     @method('put')
-
+									<div class="form-group row">
+										<div class="col-md-12">
+                                            <label for="username">Username</label>
+                                            <input type="text" name="username" value="{{ auth()->user()->username }}">
+                                            @error('username')
+												<div class="alert alert-danger">{{ $message }}</div>
+											@enderror
+										</div>
+									</div>
 									<div class="form-group row">
 										<div class="col-md-6">
                                             <label for="first_name">First Name</label>
                                             <input type="text" name="first_name" value="{{ auth()->user()->first_name }}">
                                             @error('first_name')
-												<span class="invalid-feedback" role="alert">
-													<strong>{{ $message }}</strong>
-												</span>
+												<div class="alert alert-danger">{{ $message }}</div>
 											@enderror
 										</div>
 										<div class="col-md-6">
                                             <label for="last_name">Last Name</label>
                                             <input type="text" name="last_name" value="{{ auth()->user()->last_name }}">
                                             @error('last_name')
-												<span class="invalid-feedback" role="alert">
-													<strong>{{ $message }}</strong>
-												</span>
-											@enderror
-										</div>
-									</div>
-
-									<div class="form-group row">
-										<div class="col-md-12">
-                                            <label for="company">Company</label>
-                                            <input type="text" name="company" value="{{ auth()->user()->company }}">
-											@error('company')
-												<span class="invalid-feedback" role="alert">
-													<strong>{{ $message }}</strong>
-												</span>
+												<div class="alert alert-danger">{{ $message }}</div>
 											@enderror
 										</div>
 									</div>
@@ -71,9 +68,7 @@
                                             <label for="address1">Address1</label>
                                             <textarea name="address1" rows="5">{{ auth()->user()->address1 }}</textarea>
 											@error('address1')
-												<span class="invalid-feedback" role="alert">
-													<strong>{{ $message }}</strong>
-												</span>
+												<div class="alert alert-danger">{{ $message }}</div>
 											@enderror
 										</div>
 									</div>
@@ -83,9 +78,7 @@
                                             <label for="address2">Address2</label>
                                             <textarea name="address2" rows="5">{{ auth()->user()->address2 }}</textarea>
 											@error('address2')
-												<span class="invalid-feedback" role="alert">
-													<strong>{{ $message }}</strong>
-												</span>
+												<div class="alert alert-danger">{{ $message }}</div>
 											@enderror
 										</div>
 									</div>
@@ -100,9 +93,7 @@
                                                 @endforeach
                                             </select> 
 											@error('province_id')
-												<span class="invalid-feedback" role="alert">
-													<strong>{{ $message }}</strong>
-												</span>
+												<div class="alert alert-danger">{{ $message }}</div>
 											@enderror
 										</div>
 										<div class="col-md-6">
@@ -113,9 +104,7 @@
                                                 @endforeach
                                             </select> 
 											@error('city_id')
-												<span class="invalid-feedback" role="alert">
-													<strong>{{ $message }}</strong>
-												</span>
+												<div class="alert alert-danger">{{ $message }}</div>
 											@enderror
 										</div>
 									</div>
@@ -125,18 +114,14 @@
                                         <label>Postcode / Zip <span class="required">*</span></label>						
 									    <input type="number" name="postcode" placeholder="PostalCode..." value="{{ auth()->user()->postcode }}">
 											@error('postcode')
-												<span class="invalid-feedback" role="alert">
-													<strong>{{ $message }}</strong>
-												</span>
+												<div class="alert alert-danger">{{ $message }}</div>
 											@enderror
 										</div>
 										<div class="col-md-6">
                                             <label>Phone  <span class="required">*</span></label>		
 									        <input type="number" name="phone" placeholder="Phone..." value="{{ auth()->user()->phone }}">
 											@error('phone')
-												<span class="invalid-feedback" role="alert">
-													<strong>{{ $message }}</strong>
-												</span>
+												<div class="alert alert-danger">{{ $message }}</div>
 											@enderror
 										</div>
 									</div>
@@ -146,9 +131,7 @@
                                             <label>Email Address </label>
 									        <input type="text" name="email" placeholder="Email..." value="{{ auth()->user()->email}}">		
 											@error('email')
-												<span class="invalid-feedback" role="alert">
-													<strong>{{ $message }}</strong>
-												</span>
+												<div class="alert alert-danger">{{ $message }}</div>
 											@enderror
 										</div>
 									</div>

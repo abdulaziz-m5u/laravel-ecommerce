@@ -25,6 +25,12 @@
 					<div class="checkbox-form">						
 						<h3>Billing Details</h3>
 						<div class="row">
+							<div class="col-md-12">
+								<div class="checkout-form-list">
+									<label>Username <span class="required">*</span></label>
+                                    <input type="text" name="username" value="{{ auth()->user()->username }}" placeholder="Username ...">
+								</div>
+							</div>
 							<div class="col-md-6">
 								<div class="checkout-form-list">
 									<label>First Name <span class="required">*</span></label>
@@ -35,12 +41,6 @@
 								<div class="checkout-form-list">
 									<label>Last Name <span class="required">*</span></label>
                                     <input type="text" name="last_name" value="{{ auth()->user()->last_name }}" placeholder="Last Name ...">
-								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="checkout-form-list">
-									<label>Company Name</label>
-                                    <input type="text" name="company" value="{{ auth()->user()->company }}" placeholder="Company ...">
 								</div>
 							</div>
 							<div class="col-md-12">

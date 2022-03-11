@@ -204,6 +204,21 @@ class OrderController extends Controller
 			$orderDate = date('Y-m-d H:i:s');
 			$paymentDue = (new \DateTime($orderDate))->modify('+3 day')->format('Y-m-d H:i:s');
 
+			$user_profile = [
+				'username' => $params['username'],
+				'first_name' => $params['first_name'],
+				'last_name' => $params['last_name'],
+				'address1' => $params['address1'],
+				'address2' => $params['address2'],
+				'province_id' => $params['province_id'],
+				'city_id' => $params['city_id'],
+				'postcode' => $params['postcode'],
+				'phone' => $params['phone'],
+				'email' => $params['email'],
+			];
+
+			auth()->user()->update($user_profile);
+
 			$orderParams = [
 				'user_id' => auth()->id(),
 				'code' => Order::generateCode(),
@@ -218,7 +233,6 @@ class OrderController extends Controller
 				'grand_total' => $grandTotal,
 				'customer_first_name' => $params['first_name'],
 				'customer_last_name' => $params['last_name'],
-				'customer_company' => $params['company'],
 				'customer_address1' => $params['address1'],
 				'customer_address2' => $params['address2'],
 				'customer_phone' => $params['phone'],

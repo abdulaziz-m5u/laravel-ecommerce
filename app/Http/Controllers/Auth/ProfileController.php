@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ProfileRequest;
 
 class ProfileController extends Controller
 {
@@ -16,13 +17,11 @@ class ProfileController extends Controller
 		return view('frontend.users.profile', compact('provinces', 'cities','user'));
 	}
 	
-	public function update(Request $request){
-		$params = $request->except('_token');
-		
+	public function update(ProfileRequest $request){		
         $user = auth()->user();
 
-        $user->update($params);
+        $user->update($request->validated());
 
-		return redirect()->route('profile.index');
+		return redirect()->route('profile.index')->with(['message' => 'success updated']);
 	}
 }
