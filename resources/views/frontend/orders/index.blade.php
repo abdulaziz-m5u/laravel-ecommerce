@@ -4,10 +4,10 @@
 	<div class="breadcrumb-area pt-205 breadcrumb-padding pb-210" style="background-image: url({{ asset('frontend/assets/img/bg/breadcrumb.jpg') }})">
 		<div class="container-fluid">
 			<div class="breadcrumb-content text-center">
-				<h2>My Favorites</h2>
+				<h2>My Order</h2>
 				<ul>
 					<li><a href="{{ url('/') }}">home</a></li>
-					<li>my favorites</li>
+					<li>my orders</li>
 				</ul>
 			</div>
 		</div>
@@ -19,9 +19,9 @@
                 <h3 class="sidebar-title">User Menu</h3>
                     <div class="sidebar-categories">
                         <ul>
-                            <li><a href="{{ url('profile') }}">Profile</a></li>
-                            <li><a href="{{ url('orders') }}">Orders</a></li>
-                            <li><a href="{{ url('favorites') }}">Favorites</a></li>
+							<li><a href="{{ route('profile.index') }}">Profile</a></li>
+                            <li><a href="{{ route('orders.index') }}">Orders</a></li>
+                            <li><a href="{{ route('favorite.index') }}">Favorites</a></li>
                         </ul>
                     </div>
 				</div>

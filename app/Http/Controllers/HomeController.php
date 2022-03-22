@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slide;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Null_;
 
 class HomeController extends Controller
 {
@@ -18,7 +19,7 @@ class HomeController extends Controller
     public function index()
     {
         $products = Product::latest()->get();
-        $categories = Category::latest()->where('category_id', null)->get();
+        $categories = Category::latest()->whereNull('category_id')->get();
         $slides = Slide::latest()->get();
         
         return view('frontend.homepage', compact('products', 'categories','slides'));

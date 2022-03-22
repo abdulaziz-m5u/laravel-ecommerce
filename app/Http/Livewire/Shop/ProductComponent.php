@@ -43,13 +43,14 @@ class ProductComponent extends Component
             $products = $products;
         } else {
             $category = Category::whereSlug($this->slug)->first();
-
+            
             if (is_null($category->category_id)) {
-                $categoriesIds = Category::where('id', $category->id)->pluck('id')->toArray();
-           
+        
+                $categoriesIds = Category::whereCategoryId($category->id)->pluck('id')->toArray();
+                $categoriesIds[] = $category->id;
                 $products = $products->whereHas('category', function ($query) use ($categoriesIds) {
                     $query->whereIn('id', $categoriesIds);
-                });
+                });               
 
             } else {
                 $products = $products->with('category')

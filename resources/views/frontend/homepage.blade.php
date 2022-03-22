@@ -119,14 +119,11 @@
                                         <a class="animate-top add-to-card" title="Add To Cart" href="" product-id="{{ $product->id }}" product-slug="{{ $product->slug }}">
                                             <i class="pe-7s-cart"></i>
                                         </a>
-                                        <a class="animate-right quick-view" title="Quick View" product-slug="{{ $product->slug }}" href="">
-                                            <i class="pe-7s-look"></i>
-                                        </a>
                                     </div>
                                 </div>
                                 <div class="funiture-product-content text-center">
                                     <h4><a href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a></h4>
-                                    <span>${{ $product->price }}</span>
+                                    <span>Rp.{{ number_format($product->price) }}</span>
                                 </div>
                             </div>
                         @endforeach

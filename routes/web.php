@@ -27,6 +27,7 @@ Route::get('shop/{slug?}', [\App\Http\Controllers\ShopController::class, 'index'
 Route::get('shop/tag/{slug}', [\App\Http\Controllers\ShopController::class, 'tag'])->name('shop.tag');
 Route::get('product/{slug}', [\App\Http\Controllers\ProductController::class, 'show'])->name('product.show');
 
+Route::resource('favorite', \App\Http\Controllers\FavoriteController::class)->only(['index','store','destroy']);
 Route::resource('cart', \App\Http\Controllers\CartController::class)->only(['index','store','update', 'destroy']);
 
 Route::group(['middleware' => 'auth'], function() {

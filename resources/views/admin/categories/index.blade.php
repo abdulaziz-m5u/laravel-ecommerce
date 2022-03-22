@@ -39,7 +39,7 @@
                                     <img src="{{ Storage::url('images/categories/' . $category->cover) }}"
                                         width="60" height="60" alt="{{ $category->name }}">
                                 @else
-                                    <img src="{{ asset('img/no-img.png') }}" width="60" height="60" alt="{{ $category->name }}">
+                                    <span class="badge badge-primary">No image</span>
                                 @endif
                             </td>
                             <td><a href="{{ route('admin.categories.show', $category->id) }}">

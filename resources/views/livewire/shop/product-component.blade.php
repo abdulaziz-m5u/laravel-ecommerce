@@ -53,14 +53,11 @@
                                     <a class="animate-top add-to-card" title="Add To Cart" href="" product-id="{{ $product->id }}" product-type="{{ $product->slug }}" product-slug="{{ $product->slug }}">
                                         <i class="pe-7s-cart"></i>
                                     </a>
-                                    <a class="animate-right quick-view" title="Quick View" product-slug="{{ $product->slug }}" href="">
-                                        <i class="pe-7s-look"></i>
-                                    </a>
                                 </div>
                             </div>
                             <div class="product-content">
                                 <h4><a href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a></h4>
-                                <span>{{ number_format($product->price) }}</span>
+                                <span>Rp.{{ number_format($product->price) }}</span>
                             </div>
                         </div>
                     </div>
@@ -84,16 +81,11 @@
                                     @endif
                                 </a>
                                 <span>hot</span>
-                                <div class="product-action-list-style">
-                                    <a class="animate-right quick-view" product-slug="{{ $product->slug }}" title="Quick View" href="">
-                                        <i class="pe-7s-look"></i>
-                                    </a>
-                                </div>
                             </div>
                             <div class="product-content-list">
                                 <div class="product-list-info">
                                     <h4><a href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a></h4>
-                                    <span>{{ number_format($product->price) }}</span>
+                                    <span>Rp.{{ number_format($product->price) }}</span>
                                     <p>{!! $product->description !!}</p>
                                 </div>
                                 <div class="product-list-cart-wishlist">

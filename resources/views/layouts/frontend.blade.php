@@ -40,7 +40,7 @@
                         <div class="header-bottom-wrapper">
                             <div class="logo-2 furniture-logo ptb-30">
                                 <a href="/">
-                                    <img src="{{ asset('frontend/assets/img/logo/2.png') }}" alt="">
+                                    <img height="60" style="transform:scale(1.5);object-fit: cover;" src="{{ asset('frontend/assets/img/logo/logo.png') }}" alt="">
                                 </a>
                             </div>
                             <div class="menu-style-2 furniture-menu menu-hover">
@@ -165,7 +165,7 @@
                             <div class="furniture-wishlist">
                                 <ul>
                                     <li>
-                                        <a href=""><i class="ti-heart"></i> Favorites</a>
+                                        <a href="{{ route('favorite.index') }}"><i class="ti-heart"></i> Favorites</a>
                                     </li>
                                     @auth
                                     <li>
@@ -188,7 +188,7 @@
                 <div class="container-fluid">
                     <div class="widget-wrapper">
                         <div class="footer-widget mb-30">
-                            <a href="#"><img src="{{ asset('frontend/assets/img/logo/2.png') }}" alt=""></a>
+                        <img height="60" style="transform:scale(1.5);object-fit: cover;" src="{{ asset('frontend/assets/img/logo/logo.png') }}" alt="">
                             <div class="footer-about-2">
                                 <p>There are many variations of passages of Lorem Ipsum <br>the majority have suffered alteration in some form, by <br> injected humour</p>
                             </div>

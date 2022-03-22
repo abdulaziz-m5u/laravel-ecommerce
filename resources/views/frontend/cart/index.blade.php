@@ -15,6 +15,7 @@
                             </button>
                         </div>
                     @endif
+
 					<h1 class="cart-heading text-center">Cart Page</h1>
 						<div class="table-content table-responsive">
 							<table>

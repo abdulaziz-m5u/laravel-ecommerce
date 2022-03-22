@@ -157,10 +157,10 @@ function getQuickView(product_slug) {
 
         $.ajax({
             type: "POST",
-            url: "/favorites",
+            url: "/favorite",
             data: {
                 _token: $('meta[name="csrf-token"]').attr("content"),
-                product_slug: product_slug,
+                product_slug,
             },
             success: function (response) {
                 swal(response);

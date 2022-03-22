@@ -87,8 +87,8 @@
 										<td>{{ $item->name }}</td>
 										<td>{{ $item->weight }} (gram)</td>
 										<td>{{ $item->qty }}</td>
-										<td>{{ $item->base_price }}</td>
-										<td>{{ $item->sub_total }}</td>
+										<td>Rp.{{ number_format($item->base_price) }}</td>
+										<td>Rp.{{ number_format($item->sub_total) }}</td>
 									</tr>
 								@empty
 									<tr>

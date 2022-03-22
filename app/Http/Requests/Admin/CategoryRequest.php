@@ -29,7 +29,7 @@ class CategoryRequest extends FormRequest
                 return [
                     'name' => ['required', 'max:255', 'unique:categories'],
                     'category_id' => ['nullable'],
-                    'cover' => ['required','mimes:jpg,jpeg,png,gif', 'max:20000'],
+                    'cover' => ['nullable','mimes:jpg,jpeg,png,gif', 'max:20000'],
                 ];
             }
             case 'PUT':
