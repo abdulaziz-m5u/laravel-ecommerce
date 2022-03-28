@@ -1,5 +1,5 @@
 @extends('layouts.frontend')
-
+@section('title', 'Order Detail')
 @section('content')
 	<!-- header end -->
 	<div class="breadcrumb-area pt-205 breadcrumb-padding pb-210" style="background-image: url({{ asset('frontend/assets/img/bg/breadcrumb.jpg') }})">
@@ -73,8 +73,8 @@
 										<td>{{ $item->weight }} (gram)</td>
 										<td>{{ $item->name }}</td>
 										<td>{{ $item->qty }}</td>
-										<td>{{ $item->base_price }}</td>
-										<td>{{ $item->sub_total }}</td>
+										<td>Rp.{{  number_format($item->base_price) }}</td>
+										<td>Rp.{{ number_format($item->sub_total) }}</td>
 									</tr>
 								@empty
 									<tr>
@@ -89,16 +89,16 @@
 							<div class="cart-page-total">
 								<ul>
 									<li> Subtotal
-										<span>{{ $order->base_total_price }}</span>
+										<span>Rp.{{ number_format($order->base_total_price) }}</span>
 									</li>
 									<li>Tax (10%)
-										<span>{{ $order->tax_amount }}</span>
+										<span>Rp.{{ number_format($order->tax_amount) }}</span>
 									</li>
 									<li>Shipping Cost
-										<span>{{ $order->shipping_cost }}</span>
+										<span>Rp.{{ number_format($order->shipping_cost) }}</span>
 									</li>
 									<li>Total
-										<span>{{ $order->grand_total }}</span>
+										<span>Rp.{{ number_format($order->grand_total) }}</span>
 									</li>
 								</ul>
 								@if (!$order->isPaid())

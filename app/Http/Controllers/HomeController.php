@@ -19,7 +19,7 @@ class HomeController extends Controller
     public function index()
     {
         $products = Product::latest()->get();
-        $categories = Category::latest()->whereNull('category_id')->get();
+        $categories = Category::whereNull('category_id')->take(4)->get();
         $slides = Slide::latest()->get();
         
         return view('frontend.homepage', compact('products', 'categories','slides'));

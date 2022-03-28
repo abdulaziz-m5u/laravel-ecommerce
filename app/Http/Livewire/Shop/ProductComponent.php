@@ -64,6 +64,7 @@ class ProductComponent extends Component
         }
 
         $products = $products
+            ->active()
             ->orderBy($sortField, $sortType)
             ->paginate($this->paginationLimit);
             

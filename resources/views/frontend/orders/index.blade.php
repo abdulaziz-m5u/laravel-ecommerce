@@ -43,7 +43,7 @@
 												{{ $order->code }}<br>
 												<span style="font-size: 12px; font-weight: normal"> {{ $order->order_date }}</span>
 											</td>
-											<td>{{ $order->grand_total }}</td>
+											<td>{{ number_format($order->grand_total) }}</td>
 											<td>{{ $order->status }}</td>
 											<td>{{ $order->payment_status }}</td>
 											<td>

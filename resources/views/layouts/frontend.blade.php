@@ -86,7 +86,11 @@
                                                 <span>{{ number_format($item->price) }} x {{ $item->quantity }}</span>
                                             </div>
                                             <div class="cart-delete">
-                                                <a href="{{ url('carts/remove/'. $item->id)}}" class="delete"><i class="ti-trash"></i></a>
+                                                <form id="deleteCart" action="{{ route('cart.destroy', $item->id) }}" method="POST" class="d-none">
+                                                    @csrf
+                                                    @method('delete')
+                                                </form>
+                                                <a href="" onclick="event.preventDefault();document.getElementById('deleteCart').submit();" class="delete"><i class="ti-trash"></i></a>
                                             </div>
                                         </li>
                                      @endforeach

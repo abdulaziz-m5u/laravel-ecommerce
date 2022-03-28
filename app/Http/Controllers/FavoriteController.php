@@ -29,6 +29,9 @@ class FavoriteController extends Controller
      */
     public function store(Request $request)
     {
+      if(!auth()->check()){
+        return response('kamu harus login dulu !',200);
+      }
         $request->validate(
 			[
 				'product_slug' => 'required',

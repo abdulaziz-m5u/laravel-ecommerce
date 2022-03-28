@@ -53,13 +53,13 @@
                         </tr>
                     @empty
                         <tr>
-                            <td class="text-center" colspan="6">No tags found.</td>
+                            <td class="text-center" colspan="9">No reviews found.</td>
                         </tr>
                     @endforelse
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="6">
+                            <td colspan="9">
                                 <div class="float-right">
                                     {!! $reviews->appends(request()->all())->links() !!}
                                 </div>

@@ -20,7 +20,11 @@ Route::get('payments/completed', [\App\Http\Controllers\PaymentController::class
 Route::get('payments/failed', [\App\Http\Controllers\PaymentController::class, 'failed'])->name('payment.failed');
 Route::get('payments/unfinish', [\App\Http\Controllers\PaymentController::class, 'unfinish'])->name('payment.unfinish');
 
-Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
+Route::get('text', function() {
+    return view('frontend.payments.success');
+});
+
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
 
 Route::get('search', [\App\Http\Controllers\ShopController::class, 'search'])->name('search');
 Route::get('shop/{slug?}', [\App\Http\Controllers\ShopController::class, 'index'])->name('shop.index');

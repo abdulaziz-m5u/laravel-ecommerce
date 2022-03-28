@@ -8,7 +8,7 @@
                     <div class="carousel-item {{$key == 0 ? 'active' : '' }}">
                         <img src="{{ Storage::url('images/slides/'. $slide->cover) }}" class="d-block w-100" alt="{{ $slide->title }}">
                         <div class="carousel-caption d-none d-md-block">
-                            <h5>{{ $slide->title }}</h5>
+                            <h5 class="text-white">{{ $slide->title }}</h5>
                             <p>{!! $slide->body !!}</p>
                             <a class="furniture-slider-btn btn-hover animated text-white" style="border: 1px solid #fff;" href="{{ $slide->url }}">Go</a>
                         </div>

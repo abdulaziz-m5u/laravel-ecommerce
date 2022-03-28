@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Midtrans\Snap;
 use App\Models\Order;
 use App\Models\Payment;
@@ -27,7 +28,7 @@ class OrderController extends Controller
 		}
 
 		$provinces = $this->getProvinces();
-		$cities = isset(auth()->user()->city_id) ? $this->getCities(auth()->user()->id) : [];
+		$cities = isset(auth()->user()->city_id) ? $this->getCities(auth()->user()->province_id) : [];
 
 		return view('frontend.orders.checkout', compact('items','totalWeight', 'provinces', 'cities'));
 	}
@@ -281,36 +282,7 @@ class OrderController extends Controller
 				}
 			}
 
-			$this->initPaymentGateway();
-
-			$customerDetails = [
-				'first_name' => $order->customer_first_name,
-				'last_name' => $order->customer_last_name,
-				'email' => $order->customer_email,
-				'phone' => $order->customer_phone,
-			];
-
-			$transaction_details = [
-				'enable_payments' => Payment::PAYMENT_CHANNELS,
-				'transaction_details' => [
-					'order_id' => $order->code,
-					'gross_amount' => $order->grand_total,
-				],
-				'customer_details' => $customerDetails,
-				'expiry' => [
-					'start_time' => date('Y-m-d H:i:s T'),
-					'unit' => Payment::EXPIRY_UNIT,
-			 		'duration' => Payment::EXPIRY_DURATION,
-				]
-			];
-
-			$snap = Snap::createTransaction($transaction_details);
 			
-			if ($snap->token) {
-				$order->payment_token = $snap->token;
-				$order->payment_url = $snap->redirect_url;
-				$order->save();
-			}
 
 			$shippingFirstName = isset($params['ship_to']) ? $params['shipping_first_name'] : $params['first_name'];
 			$shippingLastName = isset($params['ship_to']) ? $params['shipping_last_name'] : $params['last_name'];
@@ -344,16 +316,53 @@ class OrderController extends Controller
 
 		});
 
-		if ($order) {
-			\Cart::clear();
-
-			return redirect()->route('checkout.received', $order->id);
+		if (!isset($order)) {
+			return redirect()->back()->with([
+				'message' => 'something went wrong !',
+				'alert-type' => 'danger'
+			]);
+			// return redirect()->route('checkout.received', $order->id);
 		}
 
-		return redirect()->back()->with([
-			'message' => 'something went wrong !',
-			'alert-type' => 'danger'
-		]);
+		\Cart::clear();
+
+		$this->initPaymentGateway();
+
+		$customerDetails = [
+			'first_name' => $order->customer_first_name,
+			'last_name' => $order->customer_last_name,
+			'email' => $order->customer_email,
+			'phone' => $order->customer_phone,
+		];
+
+		$transaction_details = [
+			'enable_payments' => Payment::PAYMENT_CHANNELS,
+			'transaction_details' => [
+				'order_id' => $order->code,
+				'gross_amount' => $order->grand_total,
+			],
+			'customer_details' => $customerDetails,
+			'expiry' => [
+				'start_time' => date('Y-m-d H:i:s T'),
+				'unit' => Payment::EXPIRY_UNIT,
+				'duration' => Payment::EXPIRY_DURATION,
+			]
+		];
+
+		try{
+			$snap = Snap::createTransaction($transaction_details);
+	
+			$order->payment_token = $snap->token;
+			$order->payment_url = $snap->redirect_url;
+			$order->save();
+
+			header('Location: '. $order->payment_url);
+			exit;
+		}
+		catch(Exception $e) {
+			echo $e->getMessage();
+		}
+
 	}
 
 	public function received($orderId)
